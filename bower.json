@@ -1,0 +1,18 @@
+{
+  "name": "angular-template",
+  "description": "A starter project for AngularJS",
+  "version": "1",
+  "homepage": "https://www.paymet.com/",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "*",
+    "angular-route": "*",
+    "angular-cookies": "*",
+    "angular-loader": "*",
+    "angular-mocks": "*",
+    "html5-boilerplate": "*",
+    "jquery": "*",
+    "bootstrap": "*"
+  }
+}
