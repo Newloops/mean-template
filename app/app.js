@@ -1,5 +1,7 @@
 ﻿
 angular.module('App', [
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
+    'ngStorage',
+    'base64'
 ]);

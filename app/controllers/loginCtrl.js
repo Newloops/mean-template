@@ -1,21 +1,43 @@
 ﻿
 angular.module('App')
 
-.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', function($scope, $rootScope, $location, AuthenticationService) {
+.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', '$http', function($scope, $rootScope, $location, AuthenticationService, $http) {
 
-        AuthenticationService.ClearCredentials();
+    $scope.login = function() {
 
-        $scope.login = function() {
-            $scope.dataLoading = true;
-            AuthenticationService.Login($scope.username, $scope.password, function(response) {
-                if (response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password);
+        $scope.error = false;
+        $scope.dataLoading = true;
+
+        var param = {
+            username: $scope.username,
+            password: $scope.password
+        }
+
+        $http.post('/api/user', param)
+            .success(function(data) {
+                if ($scope.username === data.username && $scope.password === data.password) {
+
+                    var authdata = $base64.encode($scope.username + ':' + $scope.password);
+
+                    $rootScope.globals = {
+                        currentUser: {
+                            username: $scope.username,
+                            authdata: authdata
+                        }
+                    };
+
+                    $cookieStore.put('globals', $rootScope.globals);
                     $location.path('/');
                 } else {
-                    $scope.error = response.message;
+                    $scope.error = true;
                     $scope.dataLoading = false;
+                    $scope.messageError = 'El email o la contraseña son incorrectos';
                 }
+                console.log(data);
+            })
+            .error(function(data) {
+                console.log('Error:' + data);
             });
-        };
-    }
-]);
+    };
+
+}]);

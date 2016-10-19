@@ -13,6 +13,8 @@
     "angular-mocks": "*",
     "html5-boilerplate": "*",
     "jquery": "*",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "ngstorage": "*",
+    "angular-base64": "*"
   }
 }

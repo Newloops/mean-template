@@ -27,8 +27,8 @@ exports.addUser = function(req, res) {
     console.log(req.body);
 
     var user = new User({
-        name: req.body.name,
-        last_name: req.body.last_name
+        username: req.body.username,
+        password: req.body.password
     });
 
     user.save(function(err, user) {
@@ -42,7 +42,7 @@ exports.addUser = function(req, res) {
 exports.updateUser = function(req, res) {
     User.findById(req.params.id, function(err, user) {
         user.name = req.body.petId;
-        user.last_name = req.body.last_name;
+        user.password = req.body.password;
 
         user.save(function(err) {
             if (err) return res.send(500, err.message);
@@ -57,7 +57,7 @@ exports.deleteUser = function(req, res) {
     User.findById(req.params.id, function(err, user) {
         user.remove(function(err) {
             if (err) return res.send(500, err.message);
-            res.status(200);
+            res.status(200).jsonp({ message: 'Usuario eliminado!'});
             console.log('Usuario eliminado!');
         })
     });
