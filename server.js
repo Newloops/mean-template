@@ -16,7 +16,7 @@ mongoose.connect(database.url, function(err, res) { // connect to our database
     }
 });
 
-app.use(express.static(__dirname)); //Define el index
+app.use(express.static(__dirname)); //Define el index, que es el directorio raiz
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -24,8 +24,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-
-var User = require('./server/models/user');
 
 var port = process.env.PORT || 8080; // set our port
 

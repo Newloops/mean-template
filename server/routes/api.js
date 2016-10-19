@@ -2,6 +2,9 @@
 // =============================================================================
 var express = require('express');
 var api = express.Router();
+
+// Import Models and Controllers
+var User = require('../models/user');
 var UserCtrl = require('../controllers/user');
 
 api.route('/user')

@@ -1,7 +1,7 @@
 ﻿
 angular.module('App')
 
-.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', '$http', function($scope, $rootScope, $location, AuthenticationService, $http) {
+.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', '$http', '$base64', '$cookieStore', function($scope, $rootScope, $location, AuthenticationService, $http, $base64, $cookieStore) {
 
     $scope.login = function() {
 
@@ -13,9 +13,9 @@ angular.module('App')
             password: $scope.password
         }
 
-        $http.post('/api/user', param)
+        $http.get('/api/user', param)
             .success(function(data) {
-                if ($scope.username === data.username && $scope.password === data.password) {
+                if ($scope.username === data[0].username && $scope.password === data[0].password) {
 
                     var authdata = $base64.encode($scope.username + ':' + $scope.password);
 
