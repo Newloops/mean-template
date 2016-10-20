@@ -1,5 +1,41 @@
 var mongoose = require('mongoose');
+var service = require('../service');
 var User = mongoose.model('User');
+
+//POST - Route to authenticate a user
+exports.authenticate = function(req, res) {
+    User.findOne({
+        username: req.body.username
+    }, function(err, user) {
+
+        if (err) throw err;
+
+        if (!user) {
+            res.json({
+                success: false,
+                message: 'Authentication failed. User not found.'
+            });
+        } else if (user) {
+
+            // check if password matches
+            if (user.password != req.body.password) {
+                res.json({
+                    success: false,
+                    message: 'Authentication failed. Wrong password.'
+                });
+            } else {
+                console.log('POST /authenticate')
+                    // return the information including token as JSON
+                res.status(200).jsonp({
+                    success: true,
+                    user: user,
+                    message: 'Enjoy your token!',
+                    token: service.createToken(user)
+                });
+            }
+        }
+    });
+};
 
 //GET - Return all users in the DB
 exports.findAllUsers = function(req, res) {

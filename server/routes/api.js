@@ -1,11 +1,15 @@
 // ROUTES FOR OUR API
 // =============================================================================
 var express = require('express');
+var middleware = require('../middleware');
 var api = express.Router();
 
 // Import Models and Controllers
 var User = require('../models/user');
 var UserCtrl = require('../controllers/user');
+
+api.route('/authenticate')
+  .post(UserCtrl.authenticate);
 
 api.route('/user')
   .get(UserCtrl.findAllUsers)

@@ -13,9 +13,9 @@ angular.module('App')
             password: $scope.password
         }
 
-        $http.get('/api/user', param)
+        $http.post('/api/authenticate', param)
             .success(function(data) {
-                if ($scope.username === data[0].username && $scope.password === data[0].password) {
+                if (data.success===true) {
 
                     var authdata = $base64.encode($scope.username + ':' + $scope.password);
 
