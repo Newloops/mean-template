@@ -36,8 +36,8 @@ var port = process.env.PORT || 8080; // set our port
 var index = require('./server/routes/index');
 var api = require('./server/routes/api');
 
-app.use('/', index);
-app.use('/api', api);
+app.use('/', index); // Front controlado por Angular
+app.use('/api', api); // Back controlado por Node y Mongo
 
 // START THE SERVER
 // =============================================================================

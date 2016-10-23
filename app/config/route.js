@@ -9,8 +9,8 @@ angular.module('App')
             templateUrl: 'app/views/public/login.html'
         })
 
-        .when('/', {
-            controller: 'homeManagerCtrl',
+        .when('/dashboard', {
+            controller: 'dashboardCtrl',
             templateUrl: 'app/views/private/home.html'
         })
 

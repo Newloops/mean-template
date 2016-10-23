@@ -13,7 +13,9 @@ exports.authenticate = function(req, res) {
         if (!user) {
             res.json({
                 success: false,
-                message: 'Authentication failed. User not found.'
+                error: {
+                  message: 'Authentication failed. User not found.'
+                }
             });
         } else if (user) {
 
@@ -21,7 +23,9 @@ exports.authenticate = function(req, res) {
             if (user.password != req.body.password) {
                 res.json({
                     success: false,
-                    message: 'Authentication failed. Wrong password.'
+                    error: {
+                      message: 'Authentication failed. Wrong password.'
+                    }
                 });
             } else {
                 console.log('POST /authenticate')
@@ -29,7 +33,6 @@ exports.authenticate = function(req, res) {
                 res.status(200).jsonp({
                     success: true,
                     user: user,
-                    message: 'Enjoy your token!',
                     token: service.createToken(user)
                 });
             }
@@ -43,7 +46,10 @@ exports.findAllUsers = function(req, res) {
         if (err) res.send(500, err.message);
 
         console.log('GET /users')
-        res.status(200).jsonp(users);
+        res.status(200).jsonp({
+            success: true,
+            user: users
+        });
     });
 };
 
@@ -53,7 +59,10 @@ exports.findById = function(req, res) {
         if (err) return res.send(500, err.message);
 
         console.log('GET /user/' + req.params.id);
-        res.status(200).jsonp(user);
+        res.status(200).jsonp({
+            success: true,
+            user: user
+        });
     });
 };
 
@@ -69,7 +78,10 @@ exports.addUser = function(req, res) {
 
     user.save(function(err, user) {
         if (err) return res.send(500, err.message);
-        res.status(200).jsonp(user);
+        res.status(200).jsonp({
+            success: true,
+            user: user
+        });
         console.log('Usuario creado!');
     });
 };
@@ -82,7 +94,10 @@ exports.updateUser = function(req, res) {
 
         user.save(function(err) {
             if (err) return res.send(500, err.message);
-            res.status(200).jsonp(user);
+            res.status(200).jsonp({
+                success: true,
+                user: user
+            });
             console.log('Usuario actualizado!');
         });
     });
@@ -93,7 +108,12 @@ exports.deleteUser = function(req, res) {
     User.findById(req.params.id, function(err, user) {
         user.remove(function(err) {
             if (err) return res.send(500, err.message);
-            res.status(200).jsonp({ message: 'Usuario eliminado!'});
+            res.status(200).jsonp({
+                success: false,
+                error: {
+                  message: 'Usuario eliminado!'
+                }
+            });
             console.log('Usuario eliminado!');
         })
     });

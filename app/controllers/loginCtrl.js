@@ -1,7 +1,7 @@
 ﻿
 angular.module('App')
 
-.controller('loginCtrl', ['$scope', '$rootScope', '$location', 'AuthenticationService', '$http', '$base64', '$cookieStore', function($scope, $rootScope, $location, AuthenticationService, $http, $base64, $cookieStore) {
+.controller('loginCtrl', ['$scope', '$rootScope', '$location', '$http', '$base64', '$cookieStore', function($scope, $rootScope, $location, $http, $base64, $cookieStore) {
 
     $scope.login = function() {
 
@@ -17,17 +17,18 @@ angular.module('App')
             .success(function(data) {
                 if (data.success===true) {
 
-                    var authdata = $base64.encode($scope.username + ':' + $scope.password);
+                    var authdata = $base64.encode(data.user.username + ':' + data.user.password);
 
                     $rootScope.globals = {
                         currentUser: {
-                            username: $scope.username,
+                            username: data.user.username,
+                            token: data.token,
                             authdata: authdata
                         }
                     };
 
                     $cookieStore.put('globals', $rootScope.globals);
-                    $location.path('/');
+                    $location.path('/dashboard');
                 } else {
                     $scope.error = true;
                     $scope.dataLoading = false;
