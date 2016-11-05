@@ -26,6 +26,7 @@ angular.module('App')
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
         if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+            console.log("Estoy pasando por aquí");
             $location.path('/login');
         }
     });
